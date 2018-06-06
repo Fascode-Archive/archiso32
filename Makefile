@@ -1,4 +1,4 @@
-V=34
+V=$(shell git describe --exact-match)
 
 INSTALL_FILES=$(wildcard archiso/initcpio/install/*)
 HOOKS_FILES=$(wildcard archiso/initcpio/hooks/*)
@@ -35,7 +35,10 @@ install-doc:
 	install -m 644 -t $(DOC_DIR) $(DOC_FILES)
 
 dist:
-	git archive --format=tar --prefix=archiso-$(V)/ v$(V) | gzip -9 > archiso-$(V).tar.gz
-	gpg --detach-sign --use-agent archiso-$(V).tar.gz
+	git archive --format=tar --prefix=archiso32-$(V)/ $(V) | gzip -9 > archiso32-$(V).tar.gz
+	gpg --detach-sign --use-agent archiso32-$(V).tar.gz
 
-.PHONY: install install-program install-initcpio install-examples install-doc dist
+upload:
+	scp archiso32-$(V).tar.gz archiso32-$(V).tar.gz.sig sources.archlinux32.org:sources/
+
+.PHONY: install install-program install-initcpio install-examples install-doc dist upload
