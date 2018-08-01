@@ -102,7 +102,7 @@ make_setup_mkinitcpio() {
 make_customize_airootfs() {
     cp -af ${script_path}/airootfs ${work_dir}/${arch}
 
-    cp ${script_path}/pacman.conf ${work_dir}/x86_64/airootfs/etc
+    cp ${script_path}/pacman.conf ${work_dir}/${arch}/airootfs/etc
 
     curl -o ${work_dir}/${arch}/airootfs/etc/pacman.d/mirrorlist 'https://git.archlinux32.org/archlinux32/packages/raw/branch/master/core/pacman-mirrorlist/mirrorlist'
 
