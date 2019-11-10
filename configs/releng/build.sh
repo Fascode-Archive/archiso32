@@ -109,7 +109,7 @@ make_customize_airootfs() {
 
     cp ${script_path}/pacman.conf ${work_dir}/${arch}/airootfs/etc
 
-    curl -o ${work_dir}/${arch}/airootfs/etc/pacman.d/mirrorlist 'https://git.archlinux32.org/archlinux32/packages/raw/branch/master/core/pacman-mirrorlist/mirrorlist'
+    curl -o ${work_dir}/${arch}/airootfs/etc/pacman.d/mirrorlist 'https://archlinux32.org/mirrorlist/?country=all&protocol=http&protocol=https'
 
     lynx -dump -nolist 'https://wiki.archlinux.org/index.php/Installation_Guide?action=render' >> ${work_dir}/${arch}/airootfs/root/install.txt
 
