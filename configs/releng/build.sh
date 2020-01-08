@@ -52,7 +52,7 @@ run_once() {
     fi
 }
 
-# Setup custom pacman.conf with current cache directories and custom mirrorlist.
+# Setup custom pacman.conf with current cache directories and custom mirrorlist and custom architecture.
 make_pacman_conf() {
     local _cache_dirs
     _cache_dirs=($(pacman -v 2>&1 | grep '^Cache Dirs:' | sed 's/Cache Dirs:\s*//g'))
@@ -61,6 +61,14 @@ make_pacman_conf() {
       s@/var/cache/pacman/pkg/@/var/cache/archbuild32/@
       s@Include = /etc/pacman\.d/mirrorlist$@\032@
     ' ${work_dir}/pacman-x86_64.conf > ${work_dir}/pacman-i686.conf
+    local _conf
+    for _conf in ${work_dir}/pacman-*.conf; do
+        sed -i '
+          /^Architecture =/ s/=.*$/= '"${_conf##*/pacman-}"'/
+          T
+          s/\.conf$//
+        ' "$_conf"
+    done
 }
 
 # Base installation, plus needed packages (airootfs)
